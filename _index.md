@@ -52,3 +52,4 @@ When retiring a skill:
 2. Remove from this index
 3. Remove routing rule from `copilot-instructions.md`
 4. Git commit with reason: `skill: deprecate <name> — merged into <other>`
+
