@@ -89,7 +89,61 @@ The skill will remind you to revisit with a question prompt.
 ## Session Structure
 
 Each learning session follows this format:
+flowchart TD
+    subgraph FIND["① FIND SKILLS"]
+        GH["GitHub\nawsome-mcp-servers"]
+        REG["Anthropic MCP\nRegistry"]
+        NPM["npm / pip\nmcp-server-*"]
+    end
 
+    subgraph USE["② USE SKILLS (Claude API Tools)"]
+        CLIENT["Your client code\n(app.py / script)"]
+        SCHEMA["Tool JSON Schema\n{name, description, input_schema}"]
+        CLAUDE["Claude API\n(Anthropic)"]
+        TOOL_CALL["Claude returns\ntool_use block"]
+        EXEC["Your code\nexecutes the function"]
+        RESULT["Result sent back\nto Claude"]
+        FINAL["Claude gives\nfinal answer"]
+
+        CLIENT -->|"tools=[schema]"| CLAUDE
+        CLAUDE -->|"decides to call tool"| TOOL_CALL
+        TOOL_CALL --> EXEC
+        EXEC -->|"tool_result"| CLAUDE
+        CLAUDE --> FINAL
+    end
+
+    subgraph DEV["③ DEVELOP YOUR SKILL"]
+        FUNC["Write Python function\ndef search_logs(query): ..."]
+        DEF["Define JSON schema\n{name, input_schema}"]
+        TEST["Test locally\ncurl localhost:5010/chat-with-tools"]
+        FUNC --> DEF --> TEST
+    end
+
+    subgraph PUBLISH["④ PUBLISH"]
+        MCP["Wrap as MCP server\n(FastMCP / mcp lib)"]
+        REPO["git push\ngithub.com/you/my-claude-skill"]
+        PKG["pip publish\nor Docker image"]
+        MCP --> REPO --> PKG
+    end
+
+    subgraph OTHERS["⑤ OTHERS USE IT"]
+        INSTALL["pip install your-skill\nor docker run your-skill"]
+        CONFIG["Add to\nClaude Desktop config\nor API tools list"]
+        INSTALL --> CONFIG
+    end
+
+    GH --> CLIENT
+    REG --> CLIENT
+    NPM --> CLIENT
+    SCHEMA --> CLIENT
+    TEST -->|"works"| MCP
+    PKG --> INSTALL
+
+    style FIND fill:#1a3a5c,color:#fff
+    style USE fill:#1a4a2e,color:#fff
+    style DEV fill:#3a2a1a,color:#fff
+    style PUBLISH fill:#2a1a4a,color:#fff
+    style OTHERS fill:#3a1a2a,color:#fff
 ```
 1. State your current level (L1–L4)
 2. Set a session goal: "By the end I can ___"
