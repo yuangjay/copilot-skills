@@ -16,6 +16,7 @@ Last updated: 2026-03-25
 | `software-install` | dev | install, setup, configure, add package | `software-install/SKILL.md` |
 | `file` | tools | create file, move file, list, organise | `file/SKILL.md` |
 | `agent-customization` | meta | create skill, update skill, SKILL.md, instructions | (built-in) |
+| `tokenskill` | tools | save tokens, token usage, RAG query, knowledge base, add document, token stats, rag chat | `tokenskill/SKILL.md` |
 
 ## Skill Families
 
