@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
 import re
+from textwrap import dedent
 
 
 REPO_ROOT = Path("/root/.copilot/skills")
@@ -368,7 +369,7 @@ def build_managed_routing_block(repo_root: Path = REPO_ROOT) -> str:
 
     primary_list = "\n".join(f"- `{name}`" for name in known_primary)
 
-    return _normalize_space(
+    return dedent(
         f"""
 ## MANDATORY: Multi-Layer Skill Orchestration (managed from /root/.copilot/skills)
 
@@ -404,7 +405,7 @@ STEP 3 — Token Discipline
 
 {primary_list}
         """
-    )
+    ).strip()
 
 
 def sync_global_instructions(repo_root: Path = REPO_ROOT, instructions_path: Path = GLOBAL_INSTRUCTIONS) -> bool:
