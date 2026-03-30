@@ -1,0 +1,24 @@
+[
+  {
+    "name": "issue-fix-delivery",
+    "query": "fix an issue in the skill system, update tests first, then commit and push the skills repo",
+    "primary_skill": "agent-customization",
+    "overlay_skills": ["workflow-tdd", "workflow-skill-delivery"],
+    "knowledge_skills": []
+  },
+  {
+    "name": "layered-routing",
+    "query": "how should Copilot auto choose layered skills without wasting tokens",
+    "primary_skill": "agent-orchestrator",
+    "overlay_skills": [],
+    "knowledge_skills": ["tokenskill"]
+  },
+  {
+    "name": "vague-greeting-fallback",
+    "query": "hello there",
+    "primary_skill": null,
+    "overlay_skills": [],
+    "knowledge_skills": [],
+    "fallback_reason": "low_score"
+  }
+]
