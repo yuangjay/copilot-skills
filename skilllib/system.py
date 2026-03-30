@@ -4,6 +4,7 @@ from collections import Counter
 from dataclasses import dataclass
 from datetime import date
 from datetime import datetime
+from datetime import UTC
 import json
 from pathlib import Path
 import re
@@ -218,10 +219,12 @@ def discover_skills(repo_root: Path = REPO_ROOT) -> list[Skill]:
 
 def _tokenize(text: str) -> set[str]:
     raw_tokens = re.findall(r"[a-z0-9]+", text.lower())
-    tokens = set(raw_tokens)
-    for token in list(raw_tokens):
+    tokens = set()
+    for token in raw_tokens:
         if token.endswith("s") and len(token) > 3:
             tokens.add(token[:-1])
+        else:
+            tokens.add(token)
     return tokens
 
 
@@ -545,7 +548,7 @@ def record_routing_event(
 ) -> None:
     log_path.parent.mkdir(parents=True, exist_ok=True)
     event = {
-        "timestamp": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+        "timestamp": datetime.now(UTC).isoformat(timespec="seconds").replace("+00:00", "Z"),
         "source": source,
         "query": query,
         "query_length": len(query),
